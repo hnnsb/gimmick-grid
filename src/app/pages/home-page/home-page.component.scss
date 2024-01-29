@@ -1,0 +1,17 @@
+.feature-card {
+  border-radius: 20px;
+  margin: 10px auto;
+  text-align: center;
+  padding: 10px;
+  text-decoration: none;
+
+
+  -webkit-box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.5);
+}
+
+.feature-card:hover {
+  transition-duration: 200ms;
+  transform: scale(1.05);
+}

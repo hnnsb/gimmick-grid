@@ -1,0 +1,47 @@
+<div class="container">
+  <h1>Random teams generator</h1>
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <h2>Names</h2>
+        @for (name of names; track $index) {
+          <div class="my-1">
+            {{ name }}
+            <button class="btn btn-outline-secondary" (click)="deleteName($index)">
+              <i class="bi bi-trash"> </i>
+            </button>
+          </div>
+        }
+      </div>
+
+      <div class="row my-1">
+        <div class="col-auto">
+          <input class="form-control" [(ngModel)]="nameToAdd" type="text">
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-secondary" [disabled]="nameToAdd.length===0" (click)="addName()">Add Name</button>
+        </div>
+      </div>
+
+      <div class="row my-1">
+        <div class="col-2">
+          <input class="form-control" [(ngModel)]="teamCount" type="number">
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-secondary" [disabled]="names.length===0" (click)="generateTeams()">Generate Teams
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <h2>Teams</h2>
+      @for (team of teams; track $index) {
+        <h3>Team {{ $index + 1 }}</h3>
+        @for (name of team; track $index) {
+          <div>{{ name }}</div>
+        }
+      }
+    </div>
+  </div>
+</div>
