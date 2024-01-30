@@ -10,6 +10,6 @@ The goal is to build a website with many little tools and gimmicks that may or m
 
 # Developement
 
-## Deploy website
+## Deploy to GitHub pages
 
-To deploy the website with default settings for production use `ng deploy --base-href=https://hnnsb.github.io/website/`
+To deploy the website with default settings for production use `ng deploy --base-href=https://hnnsb.github.io/gimmick-grid/`

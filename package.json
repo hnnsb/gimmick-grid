@@ -1,5 +1,5 @@
 {
-  "name": "website",
+  "name": "gimmick-grid",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "ng deploy --base-href=https://hnnsb.github.io/website/"
+    "deploy": "ng deploy --base-href=https://hnnsb.github.io/gimmick-grid/"
   },
   "private": true,
   "dependencies": {

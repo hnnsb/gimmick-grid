@@ -10,5 +10,5 @@ import {CommonModule} from "@angular/common";
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'website';
+  title = 'gimmick-grid';
 }
