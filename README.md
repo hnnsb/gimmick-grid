@@ -1,4 +1,4 @@
-# Website
+# Gimmick Grid
 
 The goal is to build a website with many little tools and gimmicks that may or may not be useful.
 
