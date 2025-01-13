@@ -8,7 +8,7 @@ The goal is to build a website with many little tools and gimmicks that may or m
   - Add names and select a team count and get randomly generated teams
 - More to come, feel free to add suggestions.
 
-# Developement
+# Development
 
 ## Deploy to GitHub pages
 
