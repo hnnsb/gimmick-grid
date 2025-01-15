@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/gimmick-grid/static/css/main.88b2f8ad.css",
+    "main.js": "/gimmick-grid/static/js/main.345acb8f.js",
+    "index.html": "/gimmick-grid/index.html",
+    "main.88b2f8ad.css.map": "/gimmick-grid/static/css/main.88b2f8ad.css.map",
+    "main.345acb8f.js.map": "/gimmick-grid/static/js/main.345acb8f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.88b2f8ad.css",
+    "static/js/main.345acb8f.js"
+  ]
+}
