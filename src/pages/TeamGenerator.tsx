@@ -49,8 +49,8 @@ export default function TeamGenerator() {
     <div className="container">
       <h1>Random teams generator</h1>
       <div className="flex flex-row justify-evenly">
-        <div className="mx-2 min-w-1/3">
-          <div className="">
+        <div className="min-w-1/3">
+          <div className="border-2 border-solid rounded-xl p-4 m-4 shadow-[8px_8px_0px_0px_black]">
             <h2>Names</h2>
             <div className="my-1">
               <input className="mr-1" value={nameToAdd} onChange={(e) => setNameToAdd(e.target.value)}
@@ -72,9 +72,9 @@ export default function TeamGenerator() {
           </div>
         </div>
 
-        <div className="mx-2 min-w-1/3">
+        <div className="min-w-1/3">
+          <div className="border-2 border-solid rounded-xl p-4 m-4 shadow-[8px_8px_0px_0px_black]">
           <h2>Teams</h2>
-          <div>
             <input className="mr-1 w-8" value={teamCount}
                    onChange={(e) => setTeamCount(Number(e.target.value))} type="number"/>
             <Button disabled={names.length === 0}
@@ -82,12 +82,14 @@ export default function TeamGenerator() {
             </Button>
           </div>
           {teams.map((team, index) => (
+          <div className="border-2 border-solid rounded-xl p-4 m-4 shadow-[8px_8px_0px_0px_black]">
             <div key={index}>
               <h3>Team {index + 1}</h3>
               {team.map((name, nameIndex) => (
                 <div key={name + index}>{name}</div>
               ))}
             </div>
+          </div>
           ))}
         </div>
       </div>
