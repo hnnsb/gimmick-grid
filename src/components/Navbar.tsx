@@ -47,7 +47,7 @@ export default function Navbar() {
                 `border-solid border-white rounded-full border-3 p-2 no-underline
             ${isActive ? 'bg-white text-black' : 'text-white hover:bg-gray-800'}`
               }
-              to="/K-Means"
+              to="/k-means"
             >
               K-Means
             </NavLink>

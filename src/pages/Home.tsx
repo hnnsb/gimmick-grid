@@ -1,3 +1,6 @@
+import Button from "../components/Button";
+import {NavLink} from "react-router-dom";
+
 export default function Homepage() {
   return (
     <div className="container">
@@ -12,6 +15,7 @@ export default function Homepage() {
             specific concept or
             technique or is just a little game.
           </p>
+
         </div>
 
         <div className="border-2 border-solid rounded-xl p-2 m-2 shadow-[8px_8px_0px_0px_black]">
@@ -19,6 +23,11 @@ export default function Homepage() {
           <p>
             Enter your and your friends' names and generate random teams.
           </p>
+          <Button>
+            <NavLink to={"/team-generator"} className="no-underline text-white">
+              Check it out!
+            </NavLink>
+          </Button>
         </div>
 
         <div className="border-2 border-solid rounded-xl p-2 m-2 shadow-[8px_8px_0px_0px_black]">
@@ -26,6 +35,11 @@ export default function Homepage() {
           <p>
             A little playground to experiment with the K-Means clustering algorithm.
           </p>
+          <Button>
+            <NavLink to={"/k-means"} className="no-underline text-white">
+              Check it out!
+            </NavLink>
+          </Button>
         </div>
       </div>
 
