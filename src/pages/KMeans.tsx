@@ -59,6 +59,11 @@ export default function KMeans() {
       return;
     }
 
+    if (canvas?.parentElement) {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+    }
+
     const ctx = canvas.getContext("2d");
     if (!ctx) {
       return;
@@ -115,50 +120,60 @@ export default function KMeans() {
   return (
     <div className="container">
       <h1>K-Means</h1>
-      <div className="w-[600px] mx-auto">
+      <div className="mx-auto max-w-[600px]">
         <div className="flex flex-row justify-between items-center pb-1">
-
-          <button onClick={() => setMode("center")}
-                  className="rounded w-8 h-8"
-                  title={"Center point brush"}
-                  style={{borderWidth: mode === "center" ? "2px" : "1px"}}>
-            <div className="rounded-full w-4 h-4 bg-red-500"></div>
-          </button>
-          <button onClick={() => setMode("data")}
-                  className="rounded w-8 h-8 flex justify-center items-center"
-                  title={"Data point brush"}
-                  style={{borderWidth: mode === "data" ? "2px" : "1px"}}>
-            <div className="rounded-full w-2 h-2 bg-blue-950"></div>
-          </button>
-          <div className="flex flex-col">
+          <div className="flex flex-row items-center gap-2">
+            <button onClick={() => setMode("center")}
+                    className="rounded w-8 h-8"
+                    title={"Center point brush"}
+                    style={{borderWidth: mode === "center" ? "2px" : "1px"}}>
+              <div className="rounded-full w-4 h-4 bg-red-500"></div>
+            </button>
+            <button onClick={() => setMode("data")}
+                    className="rounded w-8 h-8 flex justify-center items-center"
+                    title={"Data point brush"}
+                    style={{borderWidth: mode === "data" ? "2px" : "1px"}}>
+              <div className="rounded-full w-2 h-2 bg-blue-950"></div>
+            </button>
             <div className="flex flex-col">
-              <label htmlFor="radius-slider">Size: {radius}</label>
-              <input type="range" min="1" max="100" value={radius} id="radius-slider"
-                     onChange={e => setRadius(Number(e.target.value))}/>
-            </div>
-            <div className="flex flex-col">
-              <label htmlFor="count-slider">Count: {count}</label>
-              <input type="range" min="1" max="100" value={count} id="count-slider"
-                     onChange={e => setCount(Number(e.target.value))}/>
+              <div className="flex flex-col">
+                <label htmlFor="radius-slider">Size: {radius}</label>
+                <input type="range" min="1" max="100" value={radius} id="radius-slider"
+                       onChange={e => setRadius(Number(e.target.value))}/>
+              </div>
+              <div className="flex flex-col">
+                <label htmlFor="count-slider">Count: {count}</label>
+                <input type="range" min="1" max="100" value={count} id="count-slider"
+                       onChange={e => setCount(Number(e.target.value))}/>
+              </div>
             </div>
           </div>
 
-          <Button variant="danger" onClick={() => {
+          <div className="flex flex-row gap-2"><Button variant="danger" onClick={() => {
             handleReset();
             setCenters([]);
             setStartCenters([]);
           }}>Remove center points</Button>
-          <Button variant="danger" onClick={() => {
-            setPoints([]);
-            handleReset();
-          }}>Remove data points</Button>
+            <Button variant="danger" onClick={() => {
+              setPoints([]);
+              handleReset();
+            }}>Remove data points</Button>
+          </div>
         </div>
-        <canvas
-          ref={canvasRef}
-          className={"border-2 border-solid border-black rounded-xl w-[600px] h-[400px] my-2 shadow-[8px_8px_0px_0px_black]"}
-          onClick={handleCanvasClick}
-        />
-        <div className="flex flex-row justify-between">
+        <div className={`my-4 mx-auto
+          w-[300px] h-[600px]
+          sm:w-[500px] sm:h-[550px]
+          md:w-[600px] md:h-[500px]
+        `}>
+          <canvas
+            ref={canvasRef}
+            width={"100%"}
+            height={"auto"}
+            className={"border-2 border-solid border-black rounded-xl shadow-[8px_8px_0px_0px_black]"}
+            onClick={handleCanvasClick}
+          />
+        </div>
+        <div className="flex flex-row gap-2 justify-between">
           <div className="flex gap-2 items-center">
             <span>Step: {step}, Finished: {finished ? "yes" : "no"}</span>
             <Button onClick={handleStepForward}
