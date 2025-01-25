@@ -5,8 +5,8 @@ export default function Homepage() {
   return (
     <div className="container">
       <h1>Welcome to the Gimmick-Grid</h1>
-      <div className="flex">
-        <div className="border-2 border-solid rounded-xl p-2 m-2 shadow-[8px_8px_0px_0px_black]">
+      <div className="flex flex-col md:flex-row">
+        <div className="p-2 shadow-card">
           <h2>What is the Gimmick-Grid?</h2>
           <p>
             The Gimmick-Grid is a collection of small projects that I have created to learn new
@@ -15,10 +15,9 @@ export default function Homepage() {
             specific concept or
             technique or is just a little game.
           </p>
-
         </div>
 
-        <div className="border-2 border-solid rounded-xl p-2 m-2 shadow-[8px_8px_0px_0px_black]">
+        <div className="p-2 shadow-card">
           <h2>Team Generator</h2>
           <p>
             Enter your and your friends' names and generate random teams.
@@ -30,13 +29,25 @@ export default function Homepage() {
           </Button>
         </div>
 
-        <div className="border-2 border-solid rounded-xl p-2 m-2 shadow-[8px_8px_0px_0px_black]">
+        <div className="p-2 shadow-card">
           <h2>K-Means</h2>
           <p>
             A little playground to experiment with the K-Means clustering algorithm.
           </p>
           <Button>
             <NavLink to={"/k-means"} className="no-underline text-white">
+              Check it out!
+            </NavLink>
+          </Button>
+        </div>
+
+        <div className="p-2 shadow-card">
+          <h2>Hitster-Generator</h2>
+          <p>
+            Generator your own hitster playing cards by entering a spotify playlist link.
+          </p>
+          <Button>
+            <NavLink to={"/hitster-generator"} className="no-underline text-white">
               Check it out!
             </NavLink>
           </Button>

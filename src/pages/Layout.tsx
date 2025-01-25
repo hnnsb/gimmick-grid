@@ -4,8 +4,11 @@ import Navbar from "../components/Navbar";
 export default function Layout() {
   return (
     <>
-      <Navbar/>
-      <Outlet />
+      <Navbar className={"fixed w-full"}/>
+      <div
+        className={"pt-14"}> {/* Add padding to the top to prevent the navbar from overlapping the content */}
+        <Outlet/>
+      </div>
     </>
   );
 }
