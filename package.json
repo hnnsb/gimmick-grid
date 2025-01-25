@@ -19,6 +19,7 @@
     "web-vitals": "^4.2.4"
   },
   "devDependencies": {
+    "@babel/plugin-transform-private-property-in-object": "^7.25.9",
     "@types/d3-delaunay": "^6.0.4",
     "@types/delaunator": "^5.0.3",
     "@types/jest": "^29.5.14",
