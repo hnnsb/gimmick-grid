@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/gimmick-grid/static/css/main.080bc14e.css",
-    "main.js": "/gimmick-grid/static/js/main.cc48e91c.js",
+    "main.css": "/gimmick-grid/static/css/main.af4ccd55.css",
+    "main.js": "/gimmick-grid/static/js/main.f62852c8.js",
     "index.html": "/gimmick-grid/index.html",
-    "main.080bc14e.css.map": "/gimmick-grid/static/css/main.080bc14e.css.map",
-    "main.cc48e91c.js.map": "/gimmick-grid/static/js/main.cc48e91c.js.map"
+    "main.af4ccd55.css.map": "/gimmick-grid/static/css/main.af4ccd55.css.map",
+    "main.f62852c8.js.map": "/gimmick-grid/static/js/main.f62852c8.js.map"
   },
   "entrypoints": [
-    "static/css/main.080bc14e.css",
-    "static/js/main.cc48e91c.js"
+    "static/css/main.af4ccd55.css",
+    "static/js/main.f62852c8.js"
   ]
 }
