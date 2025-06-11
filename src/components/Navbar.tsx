@@ -29,7 +29,7 @@ function NavLinks() {
           `border-solid border-white rounded-full border-3 p-2 no-underline
         ${isActive ? 'bg-white text-black' : 'text-white hover:bg-gray-800'}`
         }
-        to="/K-Means"
+        to="/k-means"
       >
         K-Means
       </NavLink>
@@ -38,9 +38,18 @@ function NavLinks() {
           `border-solid border-white rounded-full border-3 p-2 no-underline
         ${isActive ? 'bg-white text-black' : 'text-white hover:bg-gray-800'}`
         }
-        to="/Hitster-Generator"
+        to="/hitster-generator"
       >
         Hitster-Generator
+      </NavLink>
+      <NavLink
+        className={({isActive}) =>
+          `border-solid border-white rounded-full border-3 p-2 no-underline
+        ${isActive ? 'bg-white text-black' : 'text-white hover:bg-gray-800'}`
+        }
+        to="/tournament-planner"
+      >
+        TournamentPlanner
       </NavLink>
     </>
   )
