@@ -1,4 +1,4 @@
-import Button from "../components/Button";
+import Button from "../components/common/Button";
 import {NavLink} from "react-router-dom";
 
 export default function Homepage() {

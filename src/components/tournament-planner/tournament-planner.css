@@ -1,0 +1,21 @@
+.match {
+  padding: 10px;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+}
+
+.team {
+  /* Empty */
+}
+
+.winner {
+  color: green;
+  font-weight: bold;
+}
+
+.loser {
+  color: red;
+}

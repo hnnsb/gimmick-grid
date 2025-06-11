@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import Button from "../components/Button";
+import Button from "../components/common/Button";
 import {Delaunay} from "d3-delaunay";
 
 type Point = {

@@ -1,8 +1,8 @@
 import {NavLink} from "react-router-dom";
 // @ts-ignore
-import logo from "../logo.png";
+import logo from "../../logo.png";
 import {useState} from "react";
-import Button from "./Button";
+import Button from "../common/Button";
 
 function NavLinks() {
   return (<>
