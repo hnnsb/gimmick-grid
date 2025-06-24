@@ -146,7 +146,6 @@ export default function TournamentSandbox() {
           <div className="component-palette">
             <h3>Turnier Komponenten</h3>
             <button onClick={() => addComponentToCanvas('match')}>Einzelspiel</button>
-            <button onClick={() => addComponentToCanvas('group')}>Gruppenphase</button>
           </div>
 
           <div className="flow-container"
