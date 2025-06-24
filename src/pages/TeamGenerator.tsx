@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {FaTrash} from "react-icons/fa6";
-import Button from "../components/Button";
+import Button from "../components/common/Button";
 
 export default function TeamGenerator() {
   const [names, setNames] = useState<string[]>([]);
@@ -53,7 +53,8 @@ export default function TeamGenerator() {
           <div className="border-2 border-solid rounded-xl p-4 m-4 shadow-[8px_8px_0px_0px_black]">
             <h2>Names</h2>
             <div className="my-1">
-              <input className="mr-1" value={nameToAdd} onChange={(e) => setNameToAdd(e.target.value)}
+              <input className="mr-1" value={nameToAdd}
+                     onChange={(e) => setNameToAdd(e.target.value)}
                      type="text"/>
               <Button disabled={nameToAdd.length === 0}
                       onClick={() => addName()}>Add Name
@@ -74,7 +75,7 @@ export default function TeamGenerator() {
 
         <div className="min-w-1/3">
           <div className="border-2 border-solid rounded-xl p-4 m-4 shadow-[8px_8px_0px_0px_black]">
-          <h2>Teams</h2>
+            <h2>Teams</h2>
             <input className="mr-1 w-8" value={teamCount}
                    onChange={(e) => setTeamCount(Number(e.target.value))} type="number"/>
             <Button disabled={names.length === 0}
@@ -82,14 +83,15 @@ export default function TeamGenerator() {
             </Button>
           </div>
           {teams.map((team, index) => (
-          <div className="border-2 border-solid rounded-xl p-4 m-4 shadow-[8px_8px_0px_0px_black]">
-            <div key={index}>
-              <h3>Team {index + 1}</h3>
-              {team.map((name, nameIndex) => (
-                <div key={name + index}>{name}</div>
-              ))}
+            <div key={team.join(",") + index}
+                 className="border-2 border-solid rounded-xl p-4 m-4 shadow-[8px_8px_0px_0px_black]">
+              <div>
+                <h3>Team {index + 1}</h3>
+                {team.map((name, nameIndex) => (
+                  <div key={name + index + nameIndex}>{name}</div>
+                ))}
+              </div>
             </div>
-          </div>
           ))}
         </div>
       </div>

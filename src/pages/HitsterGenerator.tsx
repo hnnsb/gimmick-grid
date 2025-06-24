@@ -1,8 +1,8 @@
 import {FormEvent, useState} from "react";
 import {getPlaylistTracks, getSpotifyToken} from "../lib/spotify-service";
 import {PDFViewer} from "@react-pdf/renderer";
-import PDFDocument, {SongCardProps} from "../components/PDFDocument";
-import Button from "../components/Button";
+import PDFDocument, {SongCardProps} from "../components/hitster-generator/PDFDocument";
+import Button from "../components/common/Button";
 import {generateQRCodeDataUrl} from "../lib/qrcode-utils";
 
 export default function HitsterGenerator() {

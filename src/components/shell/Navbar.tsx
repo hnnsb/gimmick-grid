@@ -1,8 +1,8 @@
 import {NavLink} from "react-router-dom";
 // @ts-ignore
-import logo from "../logo.png";
+import logo from "../../logo.png";
 import {useState} from "react";
-import Button from "./Button";
+import Button from "../common/Button";
 
 function NavLinks() {
   return (<>
@@ -29,7 +29,7 @@ function NavLinks() {
           `border-solid border-white rounded-full border-3 p-2 no-underline
         ${isActive ? 'bg-white text-black' : 'text-white hover:bg-gray-800'}`
         }
-        to="/K-Means"
+        to="/k-means"
       >
         K-Means
       </NavLink>
@@ -38,9 +38,18 @@ function NavLinks() {
           `border-solid border-white rounded-full border-3 p-2 no-underline
         ${isActive ? 'bg-white text-black' : 'text-white hover:bg-gray-800'}`
         }
-        to="/Hitster-Generator"
+        to="/hitster-generator"
       >
         Hitster-Generator
+      </NavLink>
+      <NavLink
+        className={({isActive}) =>
+          `border-solid border-white rounded-full border-3 p-2 no-underline
+        ${isActive ? 'bg-white text-black' : 'text-white hover:bg-gray-800'}`
+        }
+        to="/tournament-sandbox"
+      >
+        Tournament Sandbox
       </NavLink>
     </>
   )
