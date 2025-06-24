@@ -48,10 +48,11 @@ const ScheduleView: React.FC<ScheduleViewProps> = ({matches, onBack}) => {
 
   // Aktuelle Matches abhängig vom TournamentState verwenden
   const matchesWithTeams = tournamentState ? tournamentState.getMatches() : matches;
-  const matchesFlat = matchesWithTeams.flat();
+  const matchesFlat = matchesWithTeams?.flat();
 
   return (
     <div className="tournament-schedule">
+      <button onClick={onBack}>Zurück zum Editor</button>
       <div className="team-input">
         <h2>Teams hinzufügen</h2>
         <div className="teams-list">
@@ -79,7 +80,7 @@ const ScheduleView: React.FC<ScheduleViewProps> = ({matches, onBack}) => {
             </div>
           ))}
           <button onClick={assignTeams} disabled={tournamentState !== null}>
-            Teams zuweisen
+            Turnierplan erstellen
           </button>
           {tournamentState && (
             <button onClick={() => setTournamentState(null)}>
@@ -90,8 +91,8 @@ const ScheduleView: React.FC<ScheduleViewProps> = ({matches, onBack}) => {
       </div>
 
       <h2>Spielplan</h2>
-      <button onClick={onBack}>Zurück zum Editor</button>
-
+      {tournamentState === null ?
+        <div className="text-red-500">Es sind noch keine Teams eingetragen</div> : <></>}
       {Array.from(new Set(matchesFlat.map(m => m.round))).sort((a, b) => a - b).map(round => (
         <div key={round} className="round-schedule">
           <h3>{ROUND_NAMES[new Set(matchesFlat.map(m => m.round)).size - (round + 1)]}</h3>

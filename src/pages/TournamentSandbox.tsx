@@ -21,7 +21,6 @@ import ScheduleView from '../components/tournament-sandbox/ScheduleView';
 import {componentPalette, extractMatches} from '../components/tournament-sandbox/TournamentUtils';
 
 // Importieren der Typen
-import {MatchResult} from '../types/tournament';
 
 // Registrieren der benutzerdefinierten Knotentypen
 const nodeTypes: NodeTypes = {
@@ -37,17 +36,7 @@ export default function TournamentSandbox() {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [nextId, setNextId] = useState(1);
-  const [_, setSelectedEdge] = useState<string | null>(null);
-  const [matchResults, setMatchResults] = useState<Record<string, MatchResult>>({});
   const [showSchedule, setShowSchedule] = useState<boolean>(false);
-
-  // Aktualisieren eines Spielergebnisses
-  const updateMatchResult = useCallback((matchId: string, score: MatchResult) => {
-    setMatchResults(prevResults => ({
-      ...prevResults,
-      [matchId]: score
-    }));
-  }, []);
 
   // Modifiziere deinen onConnect-Handler, um die Kanten mit zusätzlichen Daten zu versehen
   const onConnect = useCallback(
@@ -98,15 +87,9 @@ export default function TournamentSandbox() {
     setNextId(nextId + 1);
   };
 
-  // Kante auswählen
-  const onEdgeClick = useCallback((event: any, node: any) => {
-    setSelectedEdge(node.id);
-  }, []);
-
   // Alle Kanten entfernen
   const removeAllEdges = useCallback(() => {
     setEdges([]);
-    setSelectedEdge(null);
   }, [setEdges]);
 
   // Prüfen, ob eine Verbindung hergestellt werden kann
@@ -150,6 +133,7 @@ export default function TournamentSandbox() {
 
   return (
     <div className="container tournament-sandbox">
+      <div className="beta-badge">BETA</div>
       <h1>Tournament Sandbox</h1>
 
       {showSchedule ? (
@@ -173,7 +157,6 @@ export default function TournamentSandbox() {
               onNodesChange={onNodesChange}
               onEdgesChange={onEdgesChange}
               onConnect={onConnect}
-              onEdgeClick={onEdgeClick}
               nodeTypes={nodeTypes}
               edgeTypes={edgeTypes}
               isValidConnection={isValidConnection}

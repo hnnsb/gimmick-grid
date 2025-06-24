@@ -35,7 +35,7 @@ const MatchNode: React.FC<MatchNodeProps> = ({data, id, selected}) => {
                      value={description}
                      onChange={(e) => {
                        setDescription(e.target.value);
-                       data.description = description
+                       data.description = e.target.value
                      }}
               />
             </>
