@@ -1,5 +1,5 @@
 import React from 'react';
-import './TournamentSandbox.css';
+import '../TournamentSandbox.css';
 import {BaseEdge, EdgeLabelRenderer, EdgeProps, getBezierPath, useReactFlow} from "@xyflow/react";
 
 const CustomEdge = ({

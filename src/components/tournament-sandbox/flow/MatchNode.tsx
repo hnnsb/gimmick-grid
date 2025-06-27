@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import './TournamentSandbox.css';
-import Button from "../common/Button";
-import {Position} from "@xyflow/react";
+import '../TournamentSandbox.css';
+import Button from "../../common/Button";
+import {Position, useReactFlow} from "@xyflow/react";
 import LimitHandle from "./LimitHandle";
 
 interface MatchNodeProps {
@@ -15,14 +15,12 @@ interface MatchNodeProps {
 }
 
 const MatchNode: React.FC<MatchNodeProps> = ({data, id, selected}) => {
-  const [description, setDescription] = useState(data.description);
+  const {setNodes} = useReactFlow();
+  const handleRemove = () => {
+    setNodes((nodes) => nodes.filter((node) => node.id !== id));
+  }
 
-  // Löschen-Funktion aus den Node-Daten verwenden
-  const handleDelete = () => {
-    if (data.onDelete) {
-      data.onDelete(id);
-    }
-  };
+  const [description, setDescription] = useState(data.description);
 
   return (
     <div className="match-node">
@@ -30,7 +28,7 @@ const MatchNode: React.FC<MatchNodeProps> = ({data, id, selected}) => {
         <div className="match-title gap-2">
           {data.label}
           {selected && (
-            <Button variant="danger" className="" onClick={handleDelete}>
+            <Button variant="danger" className="" onClick={handleRemove}>
               Delete
             </Button>
           )}

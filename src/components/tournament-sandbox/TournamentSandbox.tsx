@@ -16,9 +16,9 @@ import {
 import {componentPalette, extractMatches, TournamenNodeType} from "./TournamentUtils";
 import ScheduleView from "./ScheduleView";
 import Button from "../common/Button";
-import MatchNode from "./MatchNode";
-import GroupNode from "./GroupNode";
-import CustomEdge from "./CustomEdge";
+import MatchNode from "./flow/MatchNode";
+import GroupNode from "./flow/GroupNode";
+import CustomEdge from "./flow/CustomEdge";
 
 
 const nodeTypes: NodeTypes = {
@@ -40,23 +40,6 @@ export default function TournamentSandbox() {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [showSchedule, setShowSchedule] = useState<boolean>(false);
-
-  const handleTeamsChange = useCallback((nodeId: string, newTeams: string[]) => {
-    setNodes(nds =>
-      nds.map(node => {
-        if (node.id === nodeId) {
-          return {
-            ...node,
-            data: {
-              ...node.data,
-              teams: newTeams,
-            }
-          };
-        }
-        return node;
-      })
-    );
-  }, [setNodes]);
 
   const handleNodeDelete = useCallback((nodeId: string) => {
     setNodes(nodes => nodes.filter(node => node.id !== nodeId));
@@ -83,7 +66,7 @@ export default function TournamentSandbox() {
         return
       }
 
-      if (connectionState.fromHandle.id.startsWith("team")) {
+      if (connectionState.fromHandle?.id?.startsWith("team")) {
         return
       }
 
@@ -98,7 +81,6 @@ export default function TournamentSandbox() {
         position: screenToFlowPosition({x: clientX, y: clientY}),
         data: {
           ...component.data,
-          onTeamsChange: handleTeamsChange,
           onDelete: handleNodeDelete,
         }
       };
@@ -113,7 +95,7 @@ export default function TournamentSandbox() {
         type: 'custom',
       };
       setEdges((eds) => addEdge(newEdge, eds));
-    }, [screenToFlowPosition, handleTeamsChange, handleNodeDelete, setNodes, setEdges]
+    }, [screenToFlowPosition, handleNodeDelete, setNodes, setEdges]
   )
 
   const addComponentToCanvas = (componentType: TournamenNodeType) => {
@@ -126,7 +108,6 @@ export default function TournamentSandbox() {
       position: {x: 250, y: 100 + (id * 10)},
       data: {
         ...component.data,
-        onTeamsChange: handleTeamsChange,
         onDelete: handleNodeDelete,
       }
     };

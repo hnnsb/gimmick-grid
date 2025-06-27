@@ -8,7 +8,7 @@ interface LimitHandleProps extends HandleProps {
 }
 
 export default function LimitHandle(props: LimitHandleProps & Omit<HTMLAttributes<HTMLDivElement>, "id">) {
-  const connections = useNodeConnections({handleId: props.id, handleType: props.type});
+  const connections = useNodeConnections({id: props.id, handleType: props.type});
   return (
     <Handle
       className={props.className}
