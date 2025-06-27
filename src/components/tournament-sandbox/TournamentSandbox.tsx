@@ -20,6 +20,8 @@ import Button from "../common/Button";
 import MatchNode from "./flow/MatchNode";
 import GroupNode from "./flow/GroupNode";
 import CustomEdge from "./flow/CustomEdge";
+import NodeBar from "./NodeBar";
+import {useDnD} from "./DnDContext";
 
 
 const nodeTypes: NodeTypes = {
@@ -35,20 +37,17 @@ let id = 1;
 const getId = () => `${id++}`;
 
 export default function TournamentSandbox() {
+  //
+  const [showSchedule, setShowSchedule] = useState<boolean>(false);
+  //
   const reactFlowWrapper = useRef(null)
-  const {screenToFlowPosition} = useReactFlow();
 
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
-  const [showSchedule, setShowSchedule] = useState<boolean>(false);
 
-  const handleNodeDelete = useCallback((nodeId: string) => {
-    setNodes((nodes: Node[]) => nodes.filter(node => node.id !== nodeId));
-
-    setEdges((edges: Edge[]) => edges.filter(edge =>
-      edge.source !== nodeId && edge.target !== nodeId
-    ));
-  }, [setNodes, setEdges]);
+  const {screenToFlowPosition} = useReactFlow();
+  const [type, setType] = useDnD();
+  //
 
   const onConnect = useCallback(
     (params: Connection) => {
@@ -86,7 +85,6 @@ export default function TournamentSandbox() {
         position: screenToFlowPosition({x: clientX, y: clientY}),
         data: {
           ...component.data,
-          onDelete: handleNodeDelete,
         }
       };
       setNodes((nds) => nds.concat(newNode));
@@ -100,7 +98,7 @@ export default function TournamentSandbox() {
         type: 'custom',
       } as Edge;
       setEdges((eds) => addEdge(newEdge, eds));
-    }, [screenToFlowPosition, handleNodeDelete, setNodes, setEdges]
+    }, [screenToFlowPosition, setNodes, setEdges]
   )
 
   const addComponentToCanvas = (componentType: TournamenNodeType) => {
@@ -113,12 +111,43 @@ export default function TournamentSandbox() {
       position: {x: 250, y: 100 + (id * 10)},
       data: {
         ...component.data,
-        onDelete: handleNodeDelete,
       }
     };
 
     setNodes(nodes => [...nodes, newNode]);
   };
+
+  const onDragOver = useCallback((event) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+  }, []);
+
+  const onDrop = useCallback(
+    (event) => {
+      event.preventDefault();
+
+      const type = event.dataTransfer.getData('text/plain');
+      const component = componentPalette.get(type);
+      if (!component) return;
+
+      const position = screenToFlowPosition({
+        x: event.clientX,
+        y: event.clientY,
+      });
+
+      const newNode = {
+        id: getId(),
+        type,
+        position,
+        data: {
+          ...component.data,
+        }
+      };
+
+      setNodes(nodes => [...nodes, newNode]);
+    },
+    [screenToFlowPosition, setNodes, type],
+  );
 
   const removeAllEdges = useCallback(() => {
     setEdges([]);
@@ -159,6 +188,7 @@ export default function TournamentSandbox() {
               <Button variant="secondary"
                       onClick={() => addComponentToCanvas(TournamenNodeType.MATCH)}>Einzelspiel</Button>
             </div>
+            <NodeBar/>
           </div>
           <div className=""
                style={{height: 800, border: '1px solid #ddd'}}
@@ -171,6 +201,8 @@ export default function TournamentSandbox() {
               onEdgesChange={onEdgesChange}
               onConnect={onConnect}
               onConnectEnd={onConnectEnd}
+              onDrop={onDrop}
+              onDragOver={onDragOver}
               nodeTypes={nodeTypes}
               edgeTypes={edgeTypes}
               isValidConnection={isValidConnection}

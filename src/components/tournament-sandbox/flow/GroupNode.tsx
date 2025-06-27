@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import '../TournamentSandbox.css';
-import {Handle, Position} from "@xyflow/react";
+import {Handle, Position, useReactFlow} from "@xyflow/react";
 
 interface GroupNodeProps {
   data: {
@@ -14,13 +14,13 @@ interface GroupNodeProps {
 }
 
 const GroupNode: React.FC<GroupNodeProps> = ({data, id, selected}) => {
+  const {setNodes} = useReactFlow();
+
   const [teams, setTeams] = useState(data.teams ?? ['Team 1', 'Team 2', 'Team 3', 'Team 4']);
 
-  const handleDelete = () => {
-    if (data.onDelete) {
-      data.onDelete(id);
-    }
-  };
+  const handleRemove = () => {
+    setNodes((nodes) => nodes.filter((node) => node.id !== id));
+  }
 
   const addTeam = () => {
     setTeams([...teams, `Team ${teams.length + 1}`]);
@@ -46,7 +46,7 @@ const GroupNode: React.FC<GroupNodeProps> = ({data, id, selected}) => {
         <div className="match-title">
           {data.label}
           {selected && (
-            <button className="delete-button" onClick={handleDelete}>
+            <button className="delete-button" onClick={handleRemove}>
               🗑️
             </button>
           )}
