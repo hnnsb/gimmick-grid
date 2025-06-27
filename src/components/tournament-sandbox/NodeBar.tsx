@@ -1,14 +1,11 @@
 import {DragEvent} from "react";
-import {useDnD} from "./DnDContext";
 import {TournamenNodeType} from "./TournamentUtils";
 import Button from "../common/Button";
 
 
-export default function NodeBar() {
-  const [_, setType] = useDnD();
+export default function NodeBar({handleMatchCreate}) {
 
   const onDragStart = (event: DragEvent<any>, nodeType: string) => {
-    setType(nodeType);
     event.dataTransfer.effectAllowed = 'move';
     event.dataTransfer.setData('text/plain', nodeType);
   };
@@ -17,14 +14,19 @@ export default function NodeBar() {
     <aside className="flex flex-row gap-2">
       <Button variant={"secondary"}
               onDragStart={(event) => onDragStart(event, TournamenNodeType.MATCH)}
+              onClick={() => handleMatchCreate(TournamenNodeType.MATCH)}
               draggable>
         Einzelspiel
       </Button>
-      <Button variant={"secondary"}
-              onDragStart={(event) => onDragStart(event, TournamenNodeType.GROUP)}
-              draggable>
-        Gruppe
-      </Button>
+      {false &&
+        <Button variant={"secondary"}
+                onDragStart={(event) => onDragStart(event, TournamenNodeType.GROUP)}
+                onClick={() => handleMatchCreate(TournamenNodeType.GROUP)}
+
+                draggable>
+          Gruppe
+        </Button>
+      }
     </aside>
   )
 }

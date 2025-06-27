@@ -16,12 +16,10 @@ import {
 } from "@xyflow/react";
 import {componentPalette, extractMatches, TournamenNodeType} from "./TournamentUtils";
 import ScheduleView from "./ScheduleView";
-import Button from "../common/Button";
 import MatchNode from "./flow/MatchNode";
 import GroupNode from "./flow/GroupNode";
 import CustomEdge from "./flow/CustomEdge";
 import NodeBar from "./NodeBar";
-import {useDnD} from "./DnDContext";
 
 
 const nodeTypes: NodeTypes = {
@@ -46,7 +44,6 @@ export default function TournamentSandbox() {
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
   const {screenToFlowPosition} = useReactFlow();
-  const [type, setType] = useDnD();
   //
 
   const onConnect = useCallback(
@@ -146,7 +143,7 @@ export default function TournamentSandbox() {
 
       setNodes(nodes => [...nodes, newNode]);
     },
-    [screenToFlowPosition, setNodes, type],
+    [screenToFlowPosition, setNodes],
   );
 
   const removeAllEdges = useCallback(() => {
@@ -185,10 +182,8 @@ export default function TournamentSandbox() {
           <div>
             <div>Turnier Komponenten</div>
             <div className="component-palette">
-              <Button variant="secondary"
-                      onClick={() => addComponentToCanvas(TournamenNodeType.MATCH)}>Einzelspiel</Button>
+              <NodeBar handleMatchCreate={addComponentToCanvas}/>
             </div>
-            <NodeBar/>
           </div>
           <div className=""
                style={{height: 800, border: '1px solid #ddd'}}
