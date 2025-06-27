@@ -1,5 +1,4 @@
 import {useState} from "react";
-import {FaTrash} from "react-icons/fa6";
 import Button from "../components/common/Button";
 
 export default function TeamGenerator() {
@@ -66,7 +65,7 @@ export default function TeamGenerator() {
                   {name}
                 </span>
                 <Button variant={"danger"} onClick={() => deleteName(index)}>
-                  <FaTrash/>
+                  Delete
                 </Button>
               </div>
             ))}

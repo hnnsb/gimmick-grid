@@ -3,9 +3,9 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "target": "ES6",
-    "strict": true,
+    "strict": false,
     "module": "esnext",
     "jsx": "react-jsx",
-    "moduleResolution": "node",
+    "moduleResolution": "node"
   }
 }

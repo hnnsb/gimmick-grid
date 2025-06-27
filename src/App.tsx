@@ -5,7 +5,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Layout from "./pages/Layout";
 import NoPage from "./pages/NoPage";
 import HitsterGenerator from "./pages/HitsterGenerator";
-import TournamentSandbox from "./pages/TournamentSandbox";
+import TournamentSandboxPage from "./pages/TournamentSandboxPage";
 
 export default function App() {
   return (
@@ -16,7 +16,7 @@ export default function App() {
           <Route path="/team-generator" element={<TeamGenerator/>}/>
           <Route path="/k-means" Component={KMeans}/>
           <Route path="/hitster-generator" Component={HitsterGenerator}/>
-          <Route path="/tournament-sandbox" Component={TournamentSandbox}/>
+          <Route path="/tournament-sandbox" Component={TournamentSandboxPage}/>
           <Route path="*" Component={NoPage}/>
         </Route>
       </Routes>

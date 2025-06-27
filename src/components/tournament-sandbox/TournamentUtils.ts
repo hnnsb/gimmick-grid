@@ -1,5 +1,5 @@
-import {Edge, Node} from 'reactflow';
 import {SingleMatch} from '../../types/tournament';
+import {Edge, Node} from "@xyflow/react";
 
 // Extrahiert Match-Daten aus dem Flow-Diagramm für die Spielplanerstellung
 export function extractMatches(
@@ -74,21 +74,25 @@ export function extractMatches(
       }
       return null;
     });
-    return a.filter(match => match !== null) as SingleMatch[];
+    return a.filter(match => match !== null);
   });
 
 }
 
+export enum TournamenNodeType {
+  MATCH = 'match',
+  GROUP = 'group',
+}
+
 // Komponenten-Palette für den Editor
-export const componentPalette = [
-  {
-    type: 'match',
+export const componentPalette = new Map([
+  [TournamenNodeType.MATCH, {
     data: {label: 'Einzelspiel', team1: 'Team 1', team2: 'Team 2'}
-  },
-  {
-    type: 'group',
+  }],
+  [TournamenNodeType.GROUP, {
     data: {label: 'Gruppenphase', teams: ['Team 1', 'Team 2', 'Team 3', 'Team 4']}
-  }
-];
+  }]
+]);
+
 
 export const ROUND_NAMES = ["Finale", "Halbfinale", "Viertelfinale", "Achtelfinale", "Sechzehntelfinale"];

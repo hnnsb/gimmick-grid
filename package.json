@@ -5,6 +5,7 @@
   "homepage": "https://hnnsb.github.io/gimmick-grid",
   "dependencies": {
     "@react-pdf/renderer": "^4.1.6",
+    "@xyflow/react": "^12.8.0",
     "cra-template-typescript": "1.2.0",
     "d3-delaunay": "^6.0.4",
     "delaunator": "^5.0.1",
@@ -15,7 +16,6 @@
     "react-icons": "^5.4.0",
     "react-router-dom": "^7.1.1",
     "react-scripts": "5.0.1",
-    "reactflow": "^11.11.4",
     "typescript": "^4.5.4",
     "uuid": "^11.1.0",
     "web-vitals": "^4.2.4"

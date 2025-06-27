@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {Handle, Position} from 'reactflow';
 import './TournamentSandbox.css';
+import {Handle, Position} from "@xyflow/react";
 
 interface GroupNodeProps {
   data: {

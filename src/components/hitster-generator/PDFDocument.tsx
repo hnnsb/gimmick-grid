@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
   },
   releaseDate: {
     fontSize: 20,
-    fontStyle: "bold",
     fontWeight: "bold",
   },
   verticalLine: {
