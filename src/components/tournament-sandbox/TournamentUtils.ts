@@ -74,7 +74,7 @@ export function extractMatches(
       }
       return null;
     });
-    return a.filter(match => match !== null);
+    return a.filter(match => match !== null) as SingleMatch[];
   });
 
 }

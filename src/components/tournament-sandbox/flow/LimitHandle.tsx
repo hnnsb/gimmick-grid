@@ -3,6 +3,7 @@ import {HandleProps} from "@xyflow/system";
 import {HTMLAttributes} from "react";
 
 interface LimitHandleProps extends HandleProps {
+  id: string;
   className?: string;
   limit: number;
 }

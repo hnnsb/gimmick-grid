@@ -4,6 +4,7 @@ import {
   Background,
   Connection,
   Controls,
+  Edge,
   FinalConnectionState,
   MiniMap,
   Node,
@@ -37,14 +38,14 @@ export default function TournamentSandbox() {
   const reactFlowWrapper = useRef(null)
   const {screenToFlowPosition} = useReactFlow();
 
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [showSchedule, setShowSchedule] = useState<boolean>(false);
 
   const handleNodeDelete = useCallback((nodeId: string) => {
-    setNodes(nodes => nodes.filter(node => node.id !== nodeId));
+    setNodes((nodes: Node[]) => nodes.filter(node => node.id !== nodeId));
 
-    setEdges(edges => edges.filter(edge =>
+    setEdges((edges: Edge[]) => edges.filter(edge =>
       edge.source !== nodeId && edge.target !== nodeId
     ));
   }, [setNodes, setEdges]);
@@ -62,8 +63,12 @@ export default function TournamentSandbox() {
 
   const onConnectEnd = useCallback(
     (event: (MouseEvent | TouchEvent), connectionState: FinalConnectionState) => {
-      if (connectionState.isValid) {
+      if (connectionState?.isValid) {
         return
+      }
+
+      if (!connectionState.fromNode || !connectionState.fromHandle) {
+        return;
       }
 
       if (connectionState.fromHandle?.id?.startsWith("team")) {
@@ -93,7 +98,7 @@ export default function TournamentSandbox() {
         sourceHandle: connectionState.fromHandle.id,
         targetHandle: "team1",
         type: 'custom',
-      };
+      } as Edge;
       setEdges((eds) => addEdge(newEdge, eds));
     }, [screenToFlowPosition, handleNodeDelete, setNodes, setEdges]
   )
@@ -120,7 +125,7 @@ export default function TournamentSandbox() {
   }, [setEdges]);
 
   const isValidConnection = useCallback(
-    (connection: Connection) => {
+    (connection: Connection | Edge) => {
       const targetNodeId = connection.target;
       const targetHandleId = connection.targetHandle;
 
