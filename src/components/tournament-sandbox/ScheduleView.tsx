@@ -1,39 +1,25 @@
-import React, { useState } from 'react';
-import { SingleMatch, Team } from '../../types/tournament';
+import React from 'react';
 import './TournamentSandbox.css';
-import { ROUND_NAMES } from "./TournamentUtils";
-import { TournamentState } from './TournamentState';
+import {ROUND_NAMES} from "./TournamentUtils";
+import {TournamentState} from './TournamentState';
 
 interface ScheduleViewProps {
-  matches: SingleMatch[][];
-  teams: string[];
-  onBack: () => void;
+  tournamentState: TournamentState;
+  updateMatchResult: (matchId, result) => void
 }
 
-const ScheduleView: React.FC<ScheduleViewProps> = ({ matches, teams, onBack }) => {
-  const [tournamentState, setTournamentState] = useState<TournamentState>(new TournamentState(matches, teams));
+const ScheduleView: React.FC<ScheduleViewProps> = ({
+                                                     tournamentState,
+                                                     updateMatchResult
+                                                   }) => {
 
-  // TODO is triggered by every rerender right now
-  tournamentState.assignTeams();
 
-  const updateMatchResult = (matchId: string, result: {
-    team1Points: number;
-    team2Points: number;
-    winner: Team
-  }) => {
-    const newState = new TournamentState(tournamentState.getMatches(), tournamentState.getTeams());
-    newState.updateMatchResult(matchId, result);
-    setTournamentState(newState);
-  };
-
-  const matchesWithTeams = tournamentState ? tournamentState.getMatches() : matches;
-  const matchesFlat = matchesWithTeams?.flat();
+  const matchesWithTeams = tournamentState.getMatches();
+  const matchesFlat = matchesWithTeams.flat();
 
   return (
     <div className="tournament-schedule">
       <h2>Spielplan</h2>
-      {tournamentState === null ?
-        <div className="text-red-500">Es sind noch keine Teams eingetragen</div> : <></>}
       {Array.from(new Set(matchesFlat.map(m => m.round))).sort((a, b) => a - b).map(round => (
         <div key={round} className="round-schedule">
           <h3>{ROUND_NAMES[new Set(matchesFlat.map(m => m.round)).size - (round + 1)]}</h3>

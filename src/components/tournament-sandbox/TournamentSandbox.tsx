@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {
   addEdge,
   Background,
@@ -22,7 +22,8 @@ import CustomEdge from "./flow/CustomEdge";
 import NodeBar from "./NodeBar";
 import Tabs from "../common/tabs/Tabs";
 import Tab from "../common/tabs/Tab";
-
+import {TournamentState} from "./TournamentState";
+import {Team} from '../../types/tournament';
 
 const nodeTypes: NodeTypes = {
   match: MatchNode,
@@ -39,7 +40,7 @@ const getId = () => `${id++}`;
 export default function TournamentSandbox() {
   // State
   const [teams, setTeams] = useState<string[]>([]);
-
+  const [tournamentState, setTournamentState] = useState<TournamentState>(undefined);
   // React Flow
   const reactFlowWrapper = useRef(null)
 
@@ -169,14 +170,43 @@ export default function TournamentSandbox() {
   );
 
 
-  const matches = extractMatches(nodes, edges);
-  let teamCount = 0
-  if (matches.length > 0) {
-    teamCount = matches[0].length * 2;
-  }
+  const matches = useMemo(() => extractMatches(nodes, edges), [nodes, edges]);
+
   useEffect(() => {
-    setTeams(Array(teamCount).fill(""))
-  }, [teamCount]);
+    let teamCount = 0;
+    if (matches.length > 0) {
+      teamCount = matches[0].length * 2;
+    }
+    setTeams(current => {
+      // Nur aktualisieren, wenn sich die Anzahl geändert hat
+      if (current.length !== teamCount) {
+        return Array(teamCount).fill("");
+      }
+      return current;
+    });
+  }, [matches]);
+
+  useEffect(() => {
+    if (!matches || matches.length === 0 || !teams || teams.length === 0) {
+      setTournamentState(undefined);
+      return;
+    }
+
+    const newState = new TournamentState(matches, teams);
+    newState.assignTeams();
+    setTournamentState(newState);
+  }, [matches, teams]);
+
+  const updateMatchResult = (matchId: string, result: {
+    team1Points: number;
+    team2Points: number;
+    winner: Team
+  }) => {
+    const newState = new TournamentState(tournamentState.getMatches(), tournamentState.getTeams());
+    newState.updateMatchResult(matchId, result);
+    setTournamentState(newState);
+  };
+
 
   return (
     <div>
@@ -228,13 +258,14 @@ export default function TournamentSandbox() {
               </div>
             </div>
           </Tab>
-          <Tab label={"Teams"}>
+          <Tab label={"Teams"} disabled={matches.length === 0}>
             <div className="team-input">
               <h2>Teams hinzufügen</h2>
               <div className="teams-list">
                 {teams.length === 0 ? (
                   <div>Du musst erst Spiele hinzufügen</div>) : (<></>
                 )}
+                {/* TODO resolve input focus problems*/}
                 {teams.map((team, index) => (
                   <div key={team + index}>
                     <input
@@ -259,10 +290,10 @@ export default function TournamentSandbox() {
               </div>
             </div>
           </Tab>
-          <Tab label={"Spielplan"} disabled={nodes.length === 0}>
+          <Tab label={"Spielplan"} disabled={matches.length === 0}>
             <ScheduleView
-              matches={matches}
-              teams={teams}
+              tournamentState={tournamentState}
+              updateMatchResult={updateMatchResult}
               onBack={() => undefined}
             />
           </Tab>
@@ -271,3 +302,24 @@ export default function TournamentSandbox() {
     </div>
   )
 }
+
+const areMatchesStructurallyEqual = (matches1, matches2) => {
+  if (!matches1 || !matches2) return matches1 === matches2;
+  if (matches1.length !== matches2.length) return false;
+
+  for (let i = 0; i < matches1.length; i++) {
+    const round1 = matches1[i];
+    const round2 = matches2[i];
+    if (round1.length !== round2.length) return false;
+
+    // Vergleiche nur die relevanten Eigenschaften (ID, Verbindungen), nicht die Position
+    for (let j = 0; j < round1.length; j++) {
+      if (round1[j].id !== round2[j].id ||
+        round1[j].nextMatchIds?.join(',') !== round2[j].nextMatchIds?.join(',') ||
+        round1[j].previousMatchIds?.join(',') !== round2[j].previousMatchIds?.join(',')) {
+        return false;
+      }
+    }
+  }
+  return true;
+};
