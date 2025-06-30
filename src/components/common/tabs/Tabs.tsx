@@ -1,5 +1,7 @@
-import React, { ReactElement, useState } from "react";
-import Tab, { TabProps } from "./Tab";
+import React, {ReactElement, useState} from "react";
+import Tab, {TabProps} from "./Tab";
+import "./tabs.css";
+import {clsx} from "clsx";
 
 interface TabsProps {
   activeTabIndex?: number;
@@ -7,7 +9,7 @@ interface TabsProps {
   children: ReactElement<TabProps> | ReactElement<TabProps>[];
 }
 
-export default function Tabs({ activeTabIndex = 0, className, children }: TabsProps) {
+export default function Tabs({activeTabIndex = 0, className, children}: Readonly<TabsProps>) {
   const [activeTab, setActiveTab] = useState(activeTabIndex)
 
   const tabs = React.Children.toArray(children)
@@ -15,18 +17,32 @@ export default function Tabs({ activeTabIndex = 0, className, children }: TabsPr
       React.isValidElement(child) && child.type === Tab
     )
 
-  const isSelected = (i)=>activeTab===i;
+  const isSelected = (i: number) => activeTab === i;
 
   return (
     <div className={className}>
       <nav>
-        <ul className="flex row list-none p-0">
+        <ul className="tab-container">
           {tabs.map((tab: ReactElement<TabProps>, index) =>
-            <li className={`shadow-card w-full ${tab.props.disabled ? "disabled text-gray-600":""} ${isSelected(index) ? "selected":""}`}>
-              <button className="w-full border-none bg-transparent p-2" onClick={() => setActiveTab(index)}
-                      disabled={tab.props.disabled}
+            <li key={tab.props.label + index}
+                className={clsx('tab', {
+                  disabled: tab.props.disabled,
+                  selected: isSelected(index),
+                })}
+            >
+              <button
+                className="w-full border-none bg-transparent p-2"
+                onClick={() => setActiveTab(index)}
+                disabled={tab.props.disabled}
               >
-                <span className={`${isSelected(index) ? "font-bold":""} `}>{tab.props.label}</span>
+              <span
+                className={clsx('text-lg', {
+                  'font-bold': isSelected(index),
+                  disabled: tab.props.disabled,
+                })}
+              >
+                {tab.props.label}
+              </span>
               </button>
             </li>
           )}

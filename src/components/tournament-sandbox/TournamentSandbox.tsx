@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {
   addEdge,
   Background,
@@ -14,7 +14,7 @@ import {
   useNodesState,
   useReactFlow
 } from "@xyflow/react";
-import { componentPalette, extractMatches, TournamenNodeType } from "./TournamentUtils";
+import {componentPalette, extractMatches, TournamenNodeType} from "./TournamentUtils";
 import ScheduleView from "./ScheduleView";
 import MatchNode from "./flow/MatchNode";
 import GroupNode from "./flow/GroupNode";
@@ -46,7 +46,7 @@ export default function TournamentSandbox() {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
-  const { screenToFlowPosition } = useReactFlow();
+  const {screenToFlowPosition} = useReactFlow();
   //
 
 
@@ -79,11 +79,11 @@ export default function TournamentSandbox() {
       if (!component) return;
 
       const id = getId()
-      const { clientX, clientY } = 'changedTouches' in event ? event.changedTouches[0] : event;
+      const {clientX, clientY} = 'changedTouches' in event ? event.changedTouches[0] : event;
       const newNode = {
         id,
         type: TournamenNodeType.MATCH,
-        position: screenToFlowPosition({ x: clientX, y: clientY }),
+        position: screenToFlowPosition({x: clientX, y: clientY}),
         data: {
           ...component.data,
         }
@@ -109,7 +109,7 @@ export default function TournamentSandbox() {
     const newNode: Node = {
       id: getId(),
       type: componentType,
-      position: { x: 250, y: 100 + (id * 10) },
+      position: {x: 250, y: 100 + (id * 10)},
       data: {
         ...component.data,
       }
@@ -181,7 +181,7 @@ export default function TournamentSandbox() {
   return (
     <div>
       <div className="beta-badge"></div>
-      <div className="container overflow-scroll">
+      <div className="container overflow-scroll p-2">
         <h1>Tournament Sandbox</h1>
 
         <Tabs>
@@ -194,7 +194,7 @@ export default function TournamentSandbox() {
                 </div>
               </div>
               <div className="shadow-card overflow-hidden"
-                   style={{ height: 800 }}
+                   style={{height: 800}}
                    ref={reactFlowWrapper}
               >
                 <ReactFlow
@@ -236,7 +236,7 @@ export default function TournamentSandbox() {
                   <div>Du musst erst Spiele hinzufügen</div>) : (<></>
                 )}
                 {teams.map((team, index) => (
-                  <div key={index}>
+                  <div key={team + index}>
                     <input
                       value={team}
                       onChange={(e) => {

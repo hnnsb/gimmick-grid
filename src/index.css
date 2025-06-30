@@ -19,12 +19,3 @@ body {
   margin: 1rem; /* 16px */
   box-shadow: 8px 8px 0 0 black;
 }
-
-.shadow-card.disabled {
-  border-color: #666666;
-  box-shadow: 8px 8px 0 0 #666666;
-}
-
-.shadow-card.selected {
-  box-shadow: 4px 4px 0 0 black;
-}
