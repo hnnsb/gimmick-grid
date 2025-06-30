@@ -24,6 +24,7 @@ import Tabs from "../common/tabs/Tabs";
 import Tab from "../common/tabs/Tab";
 import {TournamentState} from "./TournamentState";
 import {Team} from '../../types/tournament';
+import {TeamInput} from "./TeamInput";
 
 const nodeTypes: NodeTypes = {
   match: MatchNode,
@@ -172,6 +173,19 @@ export default function TournamentSandbox() {
     [edges]
   );
 
+  // In der Hauptkomponente:
+  const handleTeamUpdate = useCallback((index, value) => {
+    const newTeams = [...teams];
+    newTeams[index] = value;
+    setTeams(newTeams);
+  }, [teams]);
+
+  const handleTeamClear = useCallback((index) => {
+    const newTeams = [...teams];
+    newTeams[index] = "";
+    setTeams(newTeams);
+  }, [teams]);
+
   useEffect(() => {
     let teamCount = 0;
     if (matches.length > 0) {
@@ -264,27 +278,14 @@ export default function TournamentSandbox() {
                 {teams.length === 0 ? (
                   <div>Du musst erst Spiele hinzufügen</div>) : (<></>
                 )}
-                {/* TODO resolve input focus problems*/}
                 {teams.map((team, index) => (
-                  <div key={team + index}>
-                    <input
-                      value={team}
-                      onChange={(e) => {
-                        const newTeams = [...teams];
-                        newTeams[index] = e.target.value;
-                        setTeams(newTeams);
-                      }}
-                    />
-                    <button
-                      onClick={() => {
-                        const newTeams = [...teams];
-                        newTeams[index] = "";
-                        setTeams(newTeams);
-                      }}
-                    >
-                      X
-                    </button>
-                  </div>
+                  <TeamInput
+                    key={index}
+                    initialValue={team}
+                    index={index}
+                    onUpdate={handleTeamUpdate}
+                    onClear={handleTeamClear}
+                  />
                 ))}
               </div>
             </div>
