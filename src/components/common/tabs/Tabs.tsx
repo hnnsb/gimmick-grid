@@ -15,14 +15,18 @@ export default function Tabs({ activeTabIndex = 0, className, children }: TabsPr
       React.isValidElement(child) && child.type === Tab
     )
 
+  const isSelected = (i)=>activeTab===i;
+
   return (
     <div className={className}>
       <nav>
         <ul className="flex row list-none p-0">
           {tabs.map((tab: ReactElement<TabProps>, index) =>
-            <li className="shadow-card w-full">
-              <button className="w-full border-none bg-transparent p-2" onClick={() => setActiveTab(index)}>
-                {tab.props.label}
+            <li className={`shadow-card w-full ${tab.props.disabled ? "disabled text-gray-600":""} ${isSelected(index) ? "selected":""}`}>
+              <button className="w-full border-none bg-transparent p-2" onClick={() => setActiveTab(index)}
+                      disabled={tab.props.disabled}
+              >
+                <span className={`${isSelected(index) ? "font-bold":""} `}>{tab.props.label}</span>
               </button>
             </li>
           )}

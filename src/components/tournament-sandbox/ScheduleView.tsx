@@ -1,95 +1,36 @@
-import React, {useEffect, useState} from 'react';
-import {SingleMatch, Team} from '../../types/tournament';
+import React, { useState } from 'react';
+import { SingleMatch, Team } from '../../types/tournament';
 import './TournamentSandbox.css';
-import {ROUND_NAMES} from "./TournamentUtils";
-import {TournamentState} from './TournamentState';
+import { ROUND_NAMES } from "./TournamentUtils";
+import { TournamentState } from './TournamentState';
 
 interface ScheduleViewProps {
   matches: SingleMatch[][];
+  teams: string[];
   onBack: () => void;
 }
 
-const ScheduleView: React.FC<ScheduleViewProps> = ({matches, onBack}) => {
-  const teamCount = matches[0].length * 2;
+const ScheduleView: React.FC<ScheduleViewProps> = ({ matches, teams, onBack }) => {
+  const [tournamentState, setTournamentState] = useState<TournamentState>(new TournamentState(matches, teams));
 
-  const [teams, setTeams] = useState<string[]>(Array(teamCount).fill(''));
-
-  const [tournamentState, setTournamentState] = useState<TournamentState | null>(null);
-
-  useEffect(() => {
-    setTournamentState(null);
-  }, [matches]);
-
-  const assignTeams = () => {
-    // Neuen TournamentState mit aktuellen Teams erstellen
-    const state = new TournamentState(matches, teams);
-    const success = state.assignTeams();
-
-    if (!success) {
-      alert("Nicht genügend Teams für die Zuweisung. Bitte fügen Sie mehr Teams hinzu.");
-      return;
-    }
-
-    setTournamentState(state);
-  };
+  // TODO is triggered by every rerender right now
+  tournamentState.assignTeams();
 
   const updateMatchResult = (matchId: string, result: {
     team1Points: number;
     team2Points: number;
     winner: Team
   }) => {
-    if (!tournamentState) return;
-
-    // Neuen TournamentState basierend auf dem aktuellen erstellen
     const newState = new TournamentState(tournamentState.getMatches(), tournamentState.getTeams());
     newState.updateMatchResult(matchId, result);
     setTournamentState(newState);
   };
 
-  // Aktuelle Matches abhängig vom TournamentState verwenden
   const matchesWithTeams = tournamentState ? tournamentState.getMatches() : matches;
   const matchesFlat = matchesWithTeams?.flat();
 
   return (
     <div className="tournament-schedule">
-      <button onClick={onBack}>Zurück zum Editor</button>
-      <div className="team-input">
-        <h2>Teams hinzufügen</h2>
-        <div className="teams-list">
-          {teams.map((team, index) => (
-            <div key={index}>
-              <input
-                value={team}
-                onChange={(e) => {
-                  const newTeams = [...teams];
-                  newTeams[index] = e.target.value;
-                  setTeams(newTeams);
-                }}
-                disabled={tournamentState !== null} // Deaktivieren nach Teamzuweisung
-              />
-              <button
-                onClick={() => {
-                  const newTeams = [...teams];
-                  newTeams[index] = "";
-                  setTeams(newTeams);
-                }}
-                disabled={tournamentState !== null} // Deaktivieren nach Teamzuweisung
-              >
-                X
-              </button>
-            </div>
-          ))}
-          <button onClick={assignTeams} disabled={tournamentState !== null}>
-            Turnierplan erstellen
-          </button>
-          {tournamentState && (
-            <button onClick={() => setTournamentState(null)}>
-              Zurücksetzen
-            </button>
-          )}
-        </div>
-      </div>
-
       <h2>Spielplan</h2>
       {tournamentState === null ?
         <div className="text-red-500">Es sind noch keine Teams eingetragen</div> : <></>}

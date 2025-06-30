@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   addEdge,
   Background,
@@ -14,12 +14,14 @@ import {
   useNodesState,
   useReactFlow
 } from "@xyflow/react";
-import {componentPalette, extractMatches, TournamenNodeType} from "./TournamentUtils";
+import { componentPalette, extractMatches, TournamenNodeType } from "./TournamentUtils";
 import ScheduleView from "./ScheduleView";
 import MatchNode from "./flow/MatchNode";
 import GroupNode from "./flow/GroupNode";
 import CustomEdge from "./flow/CustomEdge";
 import NodeBar from "./NodeBar";
+import Tabs from "../common/tabs/Tabs";
+import Tab from "../common/tabs/Tab";
 
 
 const nodeTypes: NodeTypes = {
@@ -35,16 +37,18 @@ let id = 1;
 const getId = () => `${id++}`;
 
 export default function TournamentSandbox() {
-  //
-  const [showSchedule, setShowSchedule] = useState<boolean>(false);
-  //
+  // State
+  const [teams, setTeams] = useState<string[]>([]);
+
+  // React Flow
   const reactFlowWrapper = useRef(null)
 
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
-  const {screenToFlowPosition} = useReactFlow();
+  const { screenToFlowPosition } = useReactFlow();
   //
+
 
   const onConnect = useCallback(
     (params: Connection) => {
@@ -75,11 +79,11 @@ export default function TournamentSandbox() {
       if (!component) return;
 
       const id = getId()
-      const {clientX, clientY} = 'changedTouches' in event ? event.changedTouches[0] : event;
+      const { clientX, clientY } = 'changedTouches' in event ? event.changedTouches[0] : event;
       const newNode = {
         id,
         type: TournamenNodeType.MATCH,
-        position: screenToFlowPosition({x: clientX, y: clientY}),
+        position: screenToFlowPosition({ x: clientX, y: clientY }),
         data: {
           ...component.data,
         }
@@ -105,7 +109,7 @@ export default function TournamentSandbox() {
     const newNode: Node = {
       id: getId(),
       type: componentType,
-      position: {x: 250, y: 100 + (id * 10)},
+      position: { x: 250, y: 100 + (id * 10) },
       data: {
         ...component.data,
       }
@@ -166,61 +170,104 @@ export default function TournamentSandbox() {
 
 
   const matches = extractMatches(nodes, edges);
+  let teamCount = 0
+  if (matches.length > 0) {
+    teamCount = matches[0].length * 2;
+  }
+  useEffect(() => {
+    setTeams(Array(teamCount).fill(""))
+  }, [teamCount]);
 
   return (
-    <div className="container">
+    <div>
       <div className="beta-badge"></div>
-      <h1>Tournament Sandbox</h1>
+      <div className="container overflow-scroll">
+        <h1>Tournament Sandbox</h1>
 
-      {showSchedule ? (
-        <ScheduleView
-          matches={matches}
-          onBack={() => setShowSchedule(false)}
-        />
-      ) : (
-        <div className="flex gap-1 flex-col">
-          <div>
-            <div>Turnier Komponenten</div>
-            <div className="component-palette">
-              <NodeBar handleMatchCreate={addComponentToCanvas}/>
+        <Tabs>
+          <Tab label={"Editor"}>
+            <div className="flex gap-1 flex-col">
+              <div className="shadow-card">
+                <div className="p-2">
+                  <div>Turnier Komponenten</div>
+                  <NodeBar handleMatchCreate={addComponentToCanvas}/>
+                </div>
+              </div>
+              <div className="shadow-card overflow-hidden"
+                   style={{ height: 800 }}
+                   ref={reactFlowWrapper}
+              >
+                <ReactFlow
+                  nodes={nodes}
+                  edges={edges}
+                  onNodesChange={onNodesChange}
+                  onEdgesChange={onEdgesChange}
+                  onConnect={onConnect}
+                  onConnectEnd={onConnectEnd}
+                  onDrop={onDrop}
+                  onDragOver={onDragOver}
+                  nodeTypes={nodeTypes}
+                  edgeTypes={edgeTypes}
+                  isValidConnection={isValidConnection}
+                  fitView
+                  snapToGrid
+                  edgesFocusable={true}
+                  elementsSelectable={true}
+                >
+                  <Controls/>
+                  <MiniMap/>
+                  <Background color="#aaa" gap={16}/>
+                </ReactFlow>
+              </div>
+
+              <div className="edge-controls">
+                <button onClick={removeAllEdges}>Alle Verbindungen entfernen</button>
+                <button onClick={() => undefined}>
+                  Spielplan anzeigen
+                </button>
+              </div>
             </div>
-          </div>
-          <div className=""
-               style={{height: 800, border: '1px solid #ddd'}}
-               ref={reactFlowWrapper}
-          >
-            <ReactFlow
-              nodes={nodes}
-              edges={edges}
-              onNodesChange={onNodesChange}
-              onEdgesChange={onEdgesChange}
-              onConnect={onConnect}
-              onConnectEnd={onConnectEnd}
-              onDrop={onDrop}
-              onDragOver={onDragOver}
-              nodeTypes={nodeTypes}
-              edgeTypes={edgeTypes}
-              isValidConnection={isValidConnection}
-              fitView
-              snapToGrid
-              edgesFocusable={true}
-              elementsSelectable={true}
-            >
-              <Controls/>
-              <MiniMap/>
-              <Background color="#aaa" gap={16}/>
-            </ReactFlow>
-          </div>
-
-          <div className="edge-controls">
-            <button onClick={removeAllEdges}>Alle Verbindungen entfernen</button>
-            <button onClick={() => {
-              setShowSchedule(true)
-            }}>Spielplan anzeigen
-            </button>
-          </div>
-        </div>
-      )}
+          </Tab>
+          <Tab label={"Teams"}>
+            <div className="team-input">
+              <h2>Teams hinzufügen</h2>
+              <div className="teams-list">
+                {teams.length === 0 ? (
+                  <div>Du musst erst Spiele hinzufügen</div>) : (<></>
+                )}
+                {teams.map((team, index) => (
+                  <div key={index}>
+                    <input
+                      value={team}
+                      onChange={(e) => {
+                        const newTeams = [...teams];
+                        newTeams[index] = e.target.value;
+                        setTeams(newTeams);
+                      }}
+                    />
+                    <button
+                      onClick={() => {
+                        const newTeams = [...teams];
+                        newTeams[index] = "";
+                        setTeams(newTeams);
+                      }}
+                    >
+                      X
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Tab>
+          <Tab label={"Spielplan"} disabled={nodes.length === 0}>
+            <ScheduleView
+              matches={matches}
+              teams={teams}
+              onBack={() => undefined}
+            />
+          </Tab>
+        </Tabs>
+      </div>
     </div>
   )
 }

@@ -6,6 +6,7 @@ export function extractMatches(
   nodes: Node[],
   edges: Edge[]
 ): SingleMatch[][] {
+  console.log("Extract matches for " + nodes.length + " Nodes");
   const nodeMap = new Map<string, Node>();
   nodes.forEach(node => {
     nodeMap.set(node.id, node);

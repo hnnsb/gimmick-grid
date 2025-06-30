@@ -6,6 +6,7 @@
   "dependencies": {
     "@react-pdf/renderer": "^4.1.6",
     "@xyflow/react": "^12.8.0",
+    "98.css": "^0.1.21",
     "cra-template-typescript": "1.2.0",
     "d3-delaunay": "^6.0.4",
     "delaunator": "^5.0.1",

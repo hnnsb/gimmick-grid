@@ -1,5 +1,5 @@
 import Button from "../components/common/Button";
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function Homepage() {
   return (
@@ -53,8 +53,6 @@ export default function Homepage() {
           </Button>
         </div>
       </div>
-
     </div>
-  )
-    ;
+  );
 }
