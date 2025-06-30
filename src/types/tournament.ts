@@ -14,6 +14,12 @@ export interface Match {
   bracket?: string;
 }
 
+export interface Result {
+  team1Points: number;
+  team2Points: number;
+  winner: Team;
+}
+
 export interface Score {
   team1Points: number;
   team2Points: number;

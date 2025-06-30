@@ -2,10 +2,11 @@ import React from 'react';
 import './TournamentSandbox.css';
 import {ROUND_NAMES} from "./TournamentUtils";
 import {TournamentState} from './TournamentState';
+import {Result} from "../../types/tournament";
 
 interface ScheduleViewProps {
   tournamentState: TournamentState;
-  updateMatchResult: (matchId, result) => void
+  updateMatchResult: (matchId: string, result: Result) => void
 }
 
 const ScheduleView: React.FC<ScheduleViewProps> = ({
@@ -45,6 +46,7 @@ const ScheduleView: React.FC<ScheduleViewProps> = ({
                     <input
                       type="text"
                       placeholder="0:0"
+                      defaultValue={match.result ? `${match.result.team1Points}:${match.result.team2Points}` : ""}
                       disabled={!tournamentState || !match.team1 || !match.team2}
                       onChange={debounce(e => {
                         const result = e.target.value;

@@ -38,9 +38,6 @@ let id = 1;
 const getId = () => `${id++}`;
 
 export default function TournamentSandbox() {
-  // State
-  const [teams, setTeams] = useState<string[]>([]);
-  const [tournamentState, setTournamentState] = useState<TournamentState>(undefined);
   // React Flow
   const reactFlowWrapper = useRef(null)
 
@@ -48,6 +45,12 @@ export default function TournamentSandbox() {
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
   const {screenToFlowPosition} = useReactFlow();
+
+  // State
+  const [teams, setTeams] = useState<string[]>([]);
+  const [tournamentState, setTournamentState] = useState<TournamentState>(undefined);
+  const matches = useMemo(() => extractMatches(nodes, edges), [nodes, edges]);
+
   //
 
 
@@ -169,9 +172,6 @@ export default function TournamentSandbox() {
     [edges]
   );
 
-
-  const matches = useMemo(() => extractMatches(nodes, edges), [nodes, edges]);
-
   useEffect(() => {
     let teamCount = 0;
     if (matches.length > 0) {
@@ -206,7 +206,6 @@ export default function TournamentSandbox() {
     newState.updateMatchResult(matchId, result);
     setTournamentState(newState);
   };
-
 
   return (
     <div>
@@ -294,7 +293,6 @@ export default function TournamentSandbox() {
             <ScheduleView
               tournamentState={tournamentState}
               updateMatchResult={updateMatchResult}
-              onBack={() => undefined}
             />
           </Tab>
         </Tabs>
