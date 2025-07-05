@@ -1,8 +1,8 @@
 import React from 'react';
-import './TournamentSandbox.css';
 import {ROUND_NAMES} from "../TournamentUtils";
 import {TournamentState} from '../TournamentState';
 import {Result} from "../../../types/tournament";
+import './schedule-view.css';
 
 interface ScheduleViewProps {
   tournamentState: TournamentState;

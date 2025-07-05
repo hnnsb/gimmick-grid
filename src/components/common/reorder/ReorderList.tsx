@@ -83,7 +83,7 @@ function ReorderList<T>({
   return (
     <div className={`reorder-list ${listClassName} ${!dragDisabled ? 'reorder-enabled' : ''}`}>
       {list.map((item, index) => (
-        <button
+        <div
           key={index + item.toString()}
           className={`reorder-item ${itemClassName} ${dragItem.current === index ? 'reorder-dragging' : ''}`}
           draggable={!dragDisabled}
@@ -107,7 +107,7 @@ function ReorderList<T>({
               </svg>
             </div>
           )}
-        </button>
+        </div>
       ))}
     </div>
   );

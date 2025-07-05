@@ -1,6 +1,6 @@
 import React from "react";
 import {ReactFlowProvider} from "@xyflow/react";
-import ScheduleView from "./ScheduleView";
+import ScheduleView from "./schedule/ScheduleView";
 import Tabs from "../common/tabs/Tabs";
 import Tab from "../common/tabs/Tab";
 import {TournamentProvider, useTournamentContext} from "./context/TournamentContext";
