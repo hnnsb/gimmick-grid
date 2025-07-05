@@ -1,0 +1,26 @@
+.tournament-schedule {
+  margin-top: 20px;
+  width: 100%;
+}
+
+
+.round-schedule {
+  margin-bottom: 30px;
+}
+
+.round-schedule table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.round-schedule th, .round-schedule td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.round-schedule input {
+  width: 60px;
+  padding: 5px;
+  text-align: center;
+}

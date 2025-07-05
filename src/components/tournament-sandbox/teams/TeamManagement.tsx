@@ -1,9 +1,9 @@
 import React, {useMemo} from "react";
 import {TeamInput} from "../TeamInput";
 import {TeamAssignmentMode, useTournamentContext} from "../context/TournamentContext";
-import "../TournamentSandbox.css";
 import ReorderList from "../../common/reorder/ReorderList";
 import TextBox from "../../common/text-box/TextBox";
+import "./team-management.css"
 
 interface TeamManagementProps {
   teams: string[];
