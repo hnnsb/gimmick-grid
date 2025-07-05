@@ -5,11 +5,12 @@
 }
 
 .reorder-item {
+  border: none;
+  background-color: white;
   display: flex;
   align-items: center;
   padding: 8px;
   border-radius: 4px;
-  position: relative;
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
@@ -44,10 +45,7 @@
 }
 
 .reorder-index-number {
-  position: absolute;
-  left: -16px;
   width: 24px;
-  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;

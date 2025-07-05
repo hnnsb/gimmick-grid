@@ -78,7 +78,7 @@ export function TeamManagement({
             items={teamItems}
             onReorder={handleReorder}
             dragDisabled={isDragDisabled}
-            showIndexNumbers={!isDragDisabled}
+            showIndexNumbers={true}
             listClassName="teams-sortable-container"
             renderItem={(item) => (
               <TeamInput

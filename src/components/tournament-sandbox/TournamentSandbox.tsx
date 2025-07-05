@@ -7,7 +7,6 @@ import {TournamentProvider, useTournamentContext} from "./context/TournamentCont
 import {FlowEditor} from "./flow/FlowEditor";
 import {TeamManagement} from "./teams/TeamManagement";
 
-// TournamentContent ist die eigentliche Inhaltskomponente
 function TournamentContent() {
   const {
     nodes,
@@ -27,8 +26,6 @@ function TournamentContent() {
   return (
     <div>
       <div className="container overflow-scroll p-2">
-        <h1>Tournament Sandbox</h1>
-
         <Tabs>
           <Tab label={"Editor"}>
             <ReactFlowProvider>
@@ -61,7 +58,6 @@ function TournamentContent() {
   );
 }
 
-// Die Hauptkomponente ist jetzt nur noch ein Provider-Wrapper
 export default function TournamentSandbox() {
   return (
     <TournamentProvider>

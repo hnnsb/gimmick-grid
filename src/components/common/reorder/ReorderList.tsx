@@ -83,15 +83,15 @@ function ReorderList<T>({
   return (
     <div className={`reorder-list ${listClassName} ${!dragDisabled ? 'reorder-enabled' : ''}`}>
       {list.map((item, index) => (
-        <div role={"draggable"}
-             key={index}
-             className={`reorder-item ${itemClassName} ${dragItem.current === index ? 'reorder-dragging' : ''}`}
-             draggable={!dragDisabled}
-             onDragStart={() => handleDragStart(index)}
-             onDragOver={!dragDisabled ? handleDragOver : undefined}
-             onDragEnter={(e) => !dragDisabled && handleDragEnter(e, index)}
-             onDragLeave={!dragDisabled ? handleDragLeave : undefined}
-             onDragEnd={!dragDisabled ? handleDragEnd : undefined}
+        <button
+          key={index + item.toString()}
+          className={`reorder-item ${itemClassName} ${dragItem.current === index ? 'reorder-dragging' : ''}`}
+          draggable={!dragDisabled}
+          onDragStart={() => handleDragStart(index)}
+          onDragOver={!dragDisabled ? handleDragOver : undefined}
+          onDragEnter={(e) => !dragDisabled && handleDragEnter(e, index)}
+          onDragLeave={!dragDisabled ? handleDragLeave : undefined}
+          onDragEnd={!dragDisabled ? handleDragEnd : undefined}
         >
           {showIndexNumbers && (
             <div className="reorder-index-number">{index + 1}</div>
@@ -107,7 +107,7 @@ function ReorderList<T>({
               </svg>
             </div>
           )}
-        </div>
+        </button>
       ))}
     </div>
   );
