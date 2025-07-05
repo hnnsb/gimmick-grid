@@ -1,0 +1,55 @@
+.reorder-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reorder-item {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 4px;
+  position: relative;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.reorder-enabled .reorder-item {
+  cursor: move;
+}
+
+.reorder-item.reorder-dragging {
+  opacity: 0.6;
+  transform: scale(0.98);
+}
+
+.reorder-item.reorder-drag-over {
+  background-color: rgba(33, 150, 243, 0.1);
+  border: 2px dashed #2196F3;
+}
+
+.reorder-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.reorder-handle {
+  margin-left: auto;
+  color: #999;
+  cursor: grab;
+}
+
+.reorder-handle:active {
+  cursor: grabbing;
+}
+
+.reorder-index-number {
+  position: absolute;
+  left: -16px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}

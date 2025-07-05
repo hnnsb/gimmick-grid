@@ -1,0 +1,31 @@
+.text-box-primary {
+  border-width: 2px;
+  border-style: solid;
+  border-color: black;
+  border-radius: 0.75rem; /* 12px */
+  box-shadow: 4px 4px 0 0 black;
+}
+
+.text-box-secondary {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #ccc;
+  border-radius: 0.75rem; /* 12px */
+  box-shadow: 2px 2px 0 0 #ccc;
+}
+
+.text-box-warning {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #ff9800; /* Orange */
+  border-radius: 0.75rem; /* 12px */
+  box-shadow: 4px 4px 0 0 #ff9800; /* Orange shadow */
+}
+
+.text-box-danger {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #f44336; /* Red */
+  border-radius: 0.75rem; /* 12px */
+  box-shadow: 4px 4px 0 0 #f44336; /* Red shadow */
+}

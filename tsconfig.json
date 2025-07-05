@@ -6,6 +6,11 @@
     "strict": false,
     "module": "esnext",
     "jsx": "react-jsx",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "paths": {
+      "react": [
+        "./node_modules/@types/react"
+      ]
+    }
   }
 }

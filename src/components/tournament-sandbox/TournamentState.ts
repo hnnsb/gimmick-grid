@@ -21,42 +21,37 @@ export class TournamentState {
   }
 
   // Match-Management
-  assignTeams(): boolean {
-    const availableTeams = this.teams
+  assignTeams(mode: string = 'random'): boolean {
+    const teams = this.teams
       .filter(team => team.trim() !== '')
       .map(name => ({
         id: uuidv4(),
         name
       }));
 
-    if (availableTeams.length < this.matches[0].length * 2) {
-      return false; // Nicht genug Teams
+    const teamSlots = this.matches[0].length * 2
+
+    if (mode === 'random') {
+      this.shuffle(teams);
     }
 
-    this.shuffle(availableTeams);
-
     let teamIndex = 0;
+    let teamIndex2 = teamSlots - 1;
     const updatedMatches = JSON.parse(JSON.stringify(this.matches));
 
-    // Team1 für alle Matches der ersten Runde zuweisen
     updatedMatches[0].forEach((match: SingleMatch) => {
-      match.team1 = availableTeams[teamIndex];
+      match.team1 = teams[teamIndex];
       teamIndex++;
-    });
-
-    // Team2 für alle Matches der ersten Runde zuweisen
-    updatedMatches[0].forEach((match: SingleMatch) => {
-      if (teamIndex < availableTeams.length) {
-        match.team2 = availableTeams[teamIndex];
-        teamIndex++;
+      if (teamIndex2 < teams.length) {
+        match.team2 = teams[teamIndex2];
       } else {
-        // Freilos-Behandlung
         match.result = {winner: match.team1};
         const nextMatch = this.findMatchById(updatedMatches, match.nextMatchForWinner);
         if (nextMatch) {
           nextMatch.team1 = match.team1;
         }
       }
+      teamIndex2--;
     });
 
     this.matches = updatedMatches;

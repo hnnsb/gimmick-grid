@@ -46,7 +46,7 @@ const ScheduleView: React.FC<ScheduleViewProps> = ({
                     <input
                       type="text"
                       placeholder="0:0"
-                      defaultValue={match.result ? `${match.result.team1Points}:${match.result.team2Points}` : ""}
+                      defaultValue={match.result?.team1Points ? `${match.result.team1Points}:${match.result.team2Points}` : ""}
                       disabled={!tournamentState || !match.team1 || !match.team2}
                       onChange={debounce(e => {
                         const result = e.target.value;
