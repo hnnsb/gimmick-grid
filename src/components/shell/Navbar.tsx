@@ -60,7 +60,7 @@ export default function Navbar({className}: Readonly<{ className?: string }>) {
 
   return (
     <nav
-      className={`${className} flex flex-row gap-4 px-4 bg-black text-white py-2 justify-between sm:justify-start`}>
+      className={`${className} flex flex-row gap-4 px-4 bg-black text-white py-2 justify-between sm:justify-start z-10`}>
       <NavLink className="my-auto" to="/">
         <img src={logo} alt="logo" className="w-10 h-10"/>
       </NavLink>

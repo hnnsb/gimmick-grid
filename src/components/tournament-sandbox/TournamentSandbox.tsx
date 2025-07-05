@@ -220,10 +220,8 @@ export default function TournamentSandbox() {
     newState.updateMatchResult(matchId, result);
     setTournamentState(newState);
   };
-
   return (
     <div>
-      <div className="beta-badge"></div>
       <div className="container overflow-scroll p-2">
         <h1>Tournament Sandbox</h1>
 

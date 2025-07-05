@@ -114,18 +114,18 @@
 }
 
 .beta-badge {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   width: 200px;
   height: 200px;
   overflow: hidden;
-  z-index: 10;
+  z-index: 11;
 }
 
 .beta-badge::before {
   content: "BETA";
-  position: absolute;
+  position: fixed;
   top: 20px;
   right: -75px;
   transform: rotate(45deg);
